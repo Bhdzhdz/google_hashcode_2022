@@ -80,8 +80,7 @@ void accept_project(const Project &project,  const vector<Contributor*> &contrib
 }
 
 
-int main(){
-    string my_case = "e_exceptional_skills";
+int solve(string my_case){
 
     auto data = read_data(my_case);
 
