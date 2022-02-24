@@ -1,0 +1,6 @@
+maxima duracion
+10
+Cantidad de habilidades
+4
+Cantidad de habilidades
+16

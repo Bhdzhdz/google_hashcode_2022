@@ -1,0 +1,6 @@
+maxima duracion
+8999
+Cantidad de habilidades
+200
+Suma del tamanio de cadenas
+2154
