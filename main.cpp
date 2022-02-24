@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -21,8 +23,11 @@ struct Project{
     int score; // score
     int best_before;
     vector<Skill> roles;
-};
 
+    /*bool comparator <(bool ){
+
+    }*/
+};
 
 struct DataSet{
     vector<Contributor> contributors;
@@ -31,7 +36,7 @@ struct DataSet{
 
 DataSet read_data(string filename){
     fstream file;
-    file.open(filename);
+    file.open("input_data/" + filename + ".in.txt");
 
     DataSet data;
     int contributor_count, project_count;
@@ -64,11 +69,73 @@ DataSet read_data(string filename){
 
     file.close();
 
+    random_device rd;
+    mt19937 g(rd());
+ 
+    shuffle(begin(data.contributors), end(data.contributors), g);
+    shuffle(begin(data.projects), end(data.projects), g);
+
     return data;
 }
 
+struct Solution{
+    vector<string> projects;
+    vector<vector<string>> contribuitors;
+
+};
+
+void write_solution(Solution solution, string filename){
+    fstream file;
+    file.open("output_data/" + filename + ".out.txt");
+
+    file << solution.projects.size() << '\n';
+
+    for(int i = 0; i < solution.projects.size(); i++){
+        file << solution.projects[i] << '\n';
+
+        for(int j = 0; j < solution.contribuitors[i].size(); j++) {
+            file << solution.contribuitors[i][j] << ' ';
+        }
+        file << '\n';
+    }    
+    file.close();
+}
+
 int main(){
-    DataSet data = read_data("input_data/a_an_example.in.txt");
+    string my_case = "a_an_example";
+
+    Solution solution;
+
+    solution.projects = 
+        vector<string>({
+            "WebServer",
+            "Logging",
+            "WebChat"
+        });
+
+    solution.contribuitors.resize(3);
+
+    solution.contribuitors[0] = 
+        vector<string>({
+            "Bob", "Anna"
+        });
+
+    solution.contribuitors[1] = 
+        vector<string>({
+            "Anna"
+        });
+
+    solution.contribuitors[2] = 
+        vector<string>({
+            "Maria", "Bob"
+        });
+
+
+    write_solution(solution, "test");
+
+    return 0;
+    
+    DataSet data = read_data(my_case);
 
     for(auto contributor : data.contributors){
         cout << contributor.name << '\n';
@@ -81,7 +148,7 @@ int main(){
     for(auto project : data.projects){
         cout << project.name << '\n';
         cout << project.duration << '\n';
-        cout << project.score <<
-    }
-
+        cout << project.score << '\n';
+    }   
+    
 }
